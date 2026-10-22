@@ -32,11 +32,11 @@ export type ClmActionable = { actionable: true } | { actionable: false; actionab
 /**
  * Velodrome/aerodrome CLM strategies from this generation expose actionableAt(); older ones revert.
  * Inclusive: validatePools.ts tests the same cutoff against the standard wrapper, whose createdAt is >= the CLM's.
- * Arc Aero strategies lock by block instead: actionable() plus actionableBlock() for the countdown.
+ * Aero strategies lock by block instead: actionable() plus actionableBlock() for the countdown.
  */
 export function getClmActionableCheck(vault: VaultCowcentrated): ClmActionableCheck {
-  if (vault.chainId === 'arc') {
-    return vault.tokenProviderId === 'aero' ? 'actionableBlock' : 'none';
+  if (vault.tokenProviderId === 'aero') {
+    return 'actionableBlock';
   }
   if (
     (vault.tokenProviderId === 'velodrome' || vault.tokenProviderId === 'aerodrome') &&
